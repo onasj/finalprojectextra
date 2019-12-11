@@ -1,0 +1,76 @@
+netify.toml
+
+[build]
+	base = "."
+	publish = "./build"
+	command = "npm run build"
+
+	[[redirects]]
+		from = "/*"
+		to = "/index.html"
+		status = 200
+
+	[context.production]
+
+deploy react apps in less than 30 seconds
+
+<Route exact path="/signup"><Signup></Route>
+<Route exact path="/">{loggedIn ? <UserProfile /> : <Redirect to="/login" />}
+
+<Route path="/logout" component={Logout} />
+
+export default function UserProfile({ user }) {
+	console.log("user", user);
+	return (
+		<div>
+			<h1>UserProfile for {user.uid && user.uid}</h1>
+			<UserInformation email={user.email ? user.email : "whoops"} />
+		</div>
+	)
+
+        <Route path="/userprofile" component={UserProfile} />
+
+			<h1>UserProfile for {user.uid && user.uid}</h1>
+			<UserInformation email={user.email ? user.email : "whoops"} />
+
+
+export default compose(
+	connect(mapStateToProps),
+	firestoreConnect([
+		{ collection: 'projects' }
+	])
+)(Dashboard)
+
+const mapStateToProps = state => {
+	console.log(state);
+	return {
+		posts: state.firestore.ordered.posts || state.post.posts
+	};
+};
+
+
+const store = createStore(
+  rootReducer,
+  compose(
+    applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
+    reduxFirestore(firebase, fbConfig)
+  )
+);
+
+
+const rrfProps = {
+  firebase,
+  config: fbConfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance
+};
+
+
+ReactDOM.render(
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <App />
+    </ReactReduxFirebaseProvider>
+  </Provider>,
+  document.getElementById("root")
+);
